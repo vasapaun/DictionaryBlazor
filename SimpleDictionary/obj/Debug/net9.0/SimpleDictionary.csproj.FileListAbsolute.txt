@@ -1,0 +1,14 @@
+/home/vasa/RiderProjects/SimpleDictionary/SimpleDictionary/bin/Debug/net9.0/SimpleDictionary
+/home/vasa/RiderProjects/SimpleDictionary/SimpleDictionary/bin/Debug/net9.0/SimpleDictionary.deps.json
+/home/vasa/RiderProjects/SimpleDictionary/SimpleDictionary/bin/Debug/net9.0/SimpleDictionary.runtimeconfig.json
+/home/vasa/RiderProjects/SimpleDictionary/SimpleDictionary/bin/Debug/net9.0/SimpleDictionary.dll
+/home/vasa/RiderProjects/SimpleDictionary/SimpleDictionary/bin/Debug/net9.0/SimpleDictionary.pdb
+/home/vasa/RiderProjects/SimpleDictionary/SimpleDictionary/obj/Debug/net9.0/SimpleDictionary.GeneratedMSBuildEditorConfig.editorconfig
+/home/vasa/RiderProjects/SimpleDictionary/SimpleDictionary/obj/Debug/net9.0/SimpleDictionary.AssemblyInfoInputs.cache
+/home/vasa/RiderProjects/SimpleDictionary/SimpleDictionary/obj/Debug/net9.0/SimpleDictionary.AssemblyInfo.cs
+/home/vasa/RiderProjects/SimpleDictionary/SimpleDictionary/obj/Debug/net9.0/SimpleDictionary.csproj.CoreCompileInputs.cache
+/home/vasa/RiderProjects/SimpleDictionary/SimpleDictionary/obj/Debug/net9.0/SimpleDictionary.dll
+/home/vasa/RiderProjects/SimpleDictionary/SimpleDictionary/obj/Debug/net9.0/refint/SimpleDictionary.dll
+/home/vasa/RiderProjects/SimpleDictionary/SimpleDictionary/obj/Debug/net9.0/SimpleDictionary.pdb
+/home/vasa/RiderProjects/SimpleDictionary/SimpleDictionary/obj/Debug/net9.0/SimpleDictionary.genruntimeconfig.cache
+/home/vasa/RiderProjects/SimpleDictionary/SimpleDictionary/obj/Debug/net9.0/ref/SimpleDictionary.dll
