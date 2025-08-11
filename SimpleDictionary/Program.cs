@@ -7,7 +7,7 @@ for (int i = 1; i <= 2000; i++)
     dict.Add(i, i*10);
 }
 
-Console.WriteLine($"Dictionary length: {dict.Length()}");
+// Console.WriteLine($"Dictionary length: {dict.Length()}");
 
 dict.Update(new KeyValuePair<int, int>(2000, 7));
 dict.Remove(1999);
@@ -20,7 +20,7 @@ pairs = dict.ToList();
 
 foreach (var item in pairs)
 {
-    Console.WriteLine(item);
+    // Console.WriteLine(item);
 }
 
 var keys = dict.Keys();
@@ -28,10 +28,15 @@ var values = dict.Values();
 
 foreach (var key in keys)
 {
-    Console.WriteLine(key);
+    // Console.WriteLine(key);
 }
 
 foreach (var value in values)
 {
-    Console.WriteLine(value);
+    // Console.WriteLine(value);
 }
+
+SimpleDict<string, int> dict2 = new();
+dict2.Add("apple", 5);
+
+dict2.Clear();

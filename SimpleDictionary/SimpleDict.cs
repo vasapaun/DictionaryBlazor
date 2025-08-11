@@ -123,6 +123,8 @@ public class SimpleDict<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TValue>>
     {
         foreach (var bucket in _buckets)
         {
+            if (bucket == null) continue;
+            
             bucket.Clear();
         }
         
@@ -261,7 +263,7 @@ public class SimpleDict<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TValue>>
 
     private int GetBucketIndex(TKey key)
     {
-        return key.GetHashCode() % _bucketCount;
+        return Math.Abs(key.GetHashCode()) % _bucketCount;
     }
 
     private int GetBucketIndex(TKey key, int bucketCount)

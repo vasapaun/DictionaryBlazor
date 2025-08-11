@@ -1,10 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "oRjRUn6W+NY=",
+  "dgSpecHash": "FCK3uv46Wcc=",
   "success": true,
-  "projectFilePath": "/home/vasa/RiderProjects/SimpleDictionary/SimpleDictionary/SimpleDictionary.csproj",
-  "expectedPackageFiles": [
-    "/home/vasa/.nuget/packages/microsoft.aspnetcore.app.ref/9.0.5/microsoft.aspnetcore.app.ref.9.0.5.nupkg.sha512"
-  ],
+  "projectFilePath": "/home/vasa/RiderProjects/DictionaryBlazor/SimpleDictionary/SimpleDictionary.csproj",
+  "expectedPackageFiles": [],
   "logs": []
 }

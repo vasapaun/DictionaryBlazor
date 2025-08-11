@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/vasa/RiderProjects/SimpleDictionary/SimpleDictionary/SimpleDictionary.csproj": {}
+    "/home/vasa/RiderProjects/DictionaryBlazor/SimpleDictionary/SimpleDictionary.csproj": {}
   },
   "projects": {
-    "/home/vasa/RiderProjects/SimpleDictionary/SimpleDictionary/SimpleDictionary.csproj": {
+    "/home/vasa/RiderProjects/DictionaryBlazor/SimpleDictionary/SimpleDictionary.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/vasa/RiderProjects/SimpleDictionary/SimpleDictionary/SimpleDictionary.csproj",
+        "projectUniqueName": "/home/vasa/RiderProjects/DictionaryBlazor/SimpleDictionary/SimpleDictionary.csproj",
         "projectName": "SimpleDictionary",
-        "projectPath": "/home/vasa/RiderProjects/SimpleDictionary/SimpleDictionary/SimpleDictionary.csproj",
+        "projectPath": "/home/vasa/RiderProjects/DictionaryBlazor/SimpleDictionary/SimpleDictionary.csproj",
         "packagesPath": "/home/vasa/.nuget/packages/",
-        "outputPath": "/home/vasa/RiderProjects/SimpleDictionary/SimpleDictionary/obj/",
+        "outputPath": "/home/vasa/RiderProjects/DictionaryBlazor/SimpleDictionary/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/vasa/.nuget/NuGet/NuGet.Config"
@@ -38,7 +38,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.100"
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net9.0": {
@@ -54,18 +54,12 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[9.0.5, 9.0.5]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/9.0.106/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/home/vasa/.dotnet/sdk/9.0.304/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
