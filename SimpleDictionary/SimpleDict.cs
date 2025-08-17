@@ -138,11 +138,7 @@ public class SimpleDict<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TValue>>
         Remove(pair.Key);
     }
 
-    public void Remove(TKey key, TValue value)
-    {
-        Remove(key);
-    }
-
+    
     public void Clear()
     {
         foreach (var bucket in _buckets)
@@ -152,6 +148,7 @@ public class SimpleDict<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TValue>>
             bucket.Clear();
         }
         
+        // Resize
         _bucketCount = Constants.InitialBucketCount;
         _buckets = new LinkedList<KeyValuePair<TKey, TValue>>[_bucketCount];
     }
@@ -202,6 +199,7 @@ public class SimpleDict<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TValue>>
     
     // ----------------- CRUD ----------------------------------------------
 
+    // Indexer, so you can get: dictionary[key] and set: dictionary[key] = value
     public TValue this[TKey key]
     {
         get { return GetValue(key); }
@@ -252,17 +250,14 @@ public class SimpleDict<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TValue>>
         
         return count;
     }
-
-    private int BucketCount()
+    
+    private void IncreaseSize()
     {
-        return  _bucketCount;
-    }
-
-    private void IncreaseSize() // Create larger array, redistribute elements into new array, swap old array with new.
-    {
+        // Create larger bucket array
         var newBucketCount = Constants.SizeIncreaseStep * _bucketCount;
         var newBuckets = new LinkedList<KeyValuePair<TKey, TValue>>[newBucketCount];
         
+        // Redistribute elements from the old bucket array to the new one
         foreach (var bucket in _buckets)
         {
             if (bucket == null) continue;
@@ -270,7 +265,6 @@ public class SimpleDict<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TValue>>
             foreach (var kvp in bucket)
             {
                 int bucketIndex =  GetBucketIndex(kvp.Key, newBucketCount);
-                Console.WriteLine($"Bucket index:  {bucketIndex}, bucketCount:  {_bucketCount}");
                 
                 var newBucket = newBuckets[bucketIndex];
                 if (newBucket == null)
@@ -282,15 +276,18 @@ public class SimpleDict<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TValue>>
             }
         }
         
+        // Swap the old dictionary with the new one
         _buckets = newBuckets;
         _bucketCount = newBucketCount;
     }
 
     private int GetBucketIndex(TKey key)
     {
+        // Mod can return a negative integer, so take the positive value
         return Math.Abs(key.GetHashCode()) % _bucketCount;
     }
 
+    // For the purposes of IncreaseSize
     private int GetBucketIndex(TKey key, int bucketCount)
     {
         return Math.Abs(key.GetHashCode() % bucketCount);
