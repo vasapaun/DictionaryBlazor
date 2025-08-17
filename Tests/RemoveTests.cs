@@ -21,7 +21,7 @@ public class RemoveTests
         _dict.Add(key, 1);
         _dict.Remove(key);
         
-        Assert.Throws<KeyNotFoundException>(() => _dict[key] = 1);
+        Assert.That(_dict.KeyExists(key), Is.EqualTo(false));
     }
 
     [Test]

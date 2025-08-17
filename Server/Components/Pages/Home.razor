@@ -1,0 +1,95 @@
+﻿@page "/"
+@rendermode InteractiveServer
+@inject ISnackbar Snackbar
+
+<PageTitle>Dictionary App</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.Large">
+    <MudStack AlignItems="AlignItems.Center" Spacing="3">
+        <MudText Typo="Typo.h3">Auto Servis</MudText>
+        
+        <MudTabs Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6">
+            <MudTabPanel Text="Unos">
+                <MudStack Spacing="3">
+                    <MudText Typo="Typo.h5">Dodaj nov automobil</MudText>
+                    <MudTextField @bind-Value="NewKey" Label="Naziv" />
+                    <MudNumericField @bind-value="NewValue" Label = "Godište" Min = "1900" Max = "2025" Variant="Variant.Text"/>
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="DodajAuto">
+                        Dodaj automobil u bazu 
+                    </MudButton>
+                </MudStack>
+            </MudTabPanel>
+            
+            <MudTabPanel Text="Prikaz">
+                <MudStack Spacing="3">
+                    <MudText Typo="Typo.h5">Svi automobili u bazi</MudText>
+                    @if (DictList.Any())
+                    {
+                        <MudDataGrid Items="@DictList" Filterable="true" SortMode="SortMode.Multiple">
+                            <Columns>
+                                <PropertyColumn Property="x => x.Key" Title="Naziv" />
+                                <PropertyColumn Property="x => x.Value" Title="Godište" />
+                                <TemplateColumn Title="Akcije">
+                                    <CellTemplate>
+                                        <MudButton Variant="Variant.Filled" 
+                                                  Color="Color.Error" 
+                                                  Size="Size.Small"
+                                                  OnClick="@(() => UkloniAuto(context.Item.Key))">
+                                            Ukloni 
+                                        </MudButton>
+                                    </CellTemplate>
+                                </TemplateColumn>
+                            </Columns>
+                        </MudDataGrid>
+                    }
+                    else
+                    {
+                        <MudText>Još nema automobila u bazi...</MudText>
+                    }
+                </MudStack>
+            </MudTabPanel>
+        </MudTabs>
+    </MudStack>
+</MudContainer>
+
+@code {
+    public string NewKey { get; set; } = "";
+    public int NewValue { get; set; } = 2025;
+    public SimpleDict<string, int> Dict = new();
+
+    public List<KeyValuePair<string, int>> DictList => Dict.ToList();
+    
+    void DodajAuto()
+    {
+        if (NewValue == 1900 || NewKey == "")
+        {
+            Snackbar.Add("Molimo Vas unesite ispravan naziv i godište automobila.", Severity.Error);
+            NewKey = "";
+            NewValue = 2025;
+            return;
+        }
+        try
+        {
+            Dict[NewKey] = NewValue;
+            Snackbar.Add($"Automobil {NewKey} {NewValue} uspešno dodat u bazu!", Severity.Success);
+            NewKey = "";
+            NewValue = 2025;
+
+        }
+        catch (ArgumentNullException)
+        {
+            Snackbar.Add($"Molimo Vas popunite sva polja", Severity.Error);
+        }
+
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Neočekivana greška: {ex.Message}", Severity.Error);
+        }
+    }
+    
+    void UkloniAuto(string rec)
+    { 
+        Dict.Remove(rec);
+        Snackbar.Add($"Automobil {rec} uspesno uklonjen iz baze!", Severity.Success);
+    }
+}

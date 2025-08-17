@@ -29,11 +29,23 @@ public class SimpleDict<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TValue>>
             Add(entry);
         }
     }
+
+    public SimpleDict(LinkedList<KeyValuePair<TKey, TValue>> list)
+    {
+        _bucketCount = list.Count();
+        _buckets = new LinkedList<KeyValuePair<TKey, TValue>>[_bucketCount];
+        
+        foreach (var pair in list)
+        {
+            Add(pair);
+        }
+    }
     // ----------------- Constructors --------------------------------------
 
     // ----------------- CRUD ----------------------------------------------
     public void Add(TKey key, TValue value)
     {
+        // Check key and value
         if (key == null || value == null) throw new ArgumentNullException();
         if (KeyExists(key)) throw new ArgumentException();
         
@@ -87,6 +99,18 @@ public class SimpleDict<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TValue>>
     public void Update(TKey key, TValue value)
     {
         Update(new KeyValuePair<TKey, TValue>(key, value));
+    }
+
+    public void AddOrUpdate(TKey key, TValue value)
+    {
+        if (KeyExists(key))
+        {
+            Update(key, value);
+        }
+        else
+        {
+            Add(key, value);
+        }
     }
 
     public void Remove(TKey key)
@@ -181,7 +205,7 @@ public class SimpleDict<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TValue>>
     public TValue this[TKey key]
     {
         get { return GetValue(key); }
-        set { Update(key, value); }
+        set { AddOrUpdate(key, value); }
     }
 
     public bool KeyExists(TKey key)
@@ -246,6 +270,7 @@ public class SimpleDict<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TValue>>
             foreach (var kvp in bucket)
             {
                 int bucketIndex =  GetBucketIndex(kvp.Key, newBucketCount);
+                Console.WriteLine($"Bucket index:  {bucketIndex}, bucketCount:  {_bucketCount}");
                 
                 var newBucket = newBuckets[bucketIndex];
                 if (newBucket == null)
@@ -268,7 +293,7 @@ public class SimpleDict<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TValue>>
 
     private int GetBucketIndex(TKey key, int bucketCount)
     {
-        return key.GetHashCode() % bucketCount;
+        return Math.Abs(key.GetHashCode() % bucketCount);
     }
 
     // --------- IEnumerable Implementation --------------
