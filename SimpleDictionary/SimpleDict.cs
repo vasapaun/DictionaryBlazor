@@ -5,7 +5,7 @@ namespace SimpleDictionary;
 public class Constants
 {
     public const int InitialBucketCount = 8;
-    public const int SizeIncreaseStep = 4;
+    public const int ResizeStep = 4;
 }
 
 public class SimpleDict<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TValue>>
@@ -66,7 +66,7 @@ public class SimpleDict<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TValue>>
         // If buckets are 'crowded', increase bucket count
         if (Length() >= _bucketCount)
         {
-            IncreaseSize();
+            Resize(Size() * Constants.ResizeStep);
         }
     }
 
@@ -130,6 +130,11 @@ public class SimpleDict<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TValue>>
                 break;
             }
             bucketNode = bucketNode.Next;
+        }
+
+        if (Length() <= _bucketCount / Constants.ResizeStep)
+        {
+            Resize(_bucketCount / Constants.ResizeStep);
         }
     }
 
@@ -254,7 +259,7 @@ public class SimpleDict<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TValue>>
     private void IncreaseSize()
     {
         // Create larger bucket array
-        var newBucketCount = Constants.SizeIncreaseStep * _bucketCount;
+        var newBucketCount = Constants.ResizeStep * _bucketCount;
         var newBuckets = new LinkedList<KeyValuePair<TKey, TValue>>[newBucketCount];
         
         // Redistribute elements from the old bucket array to the new one
@@ -280,6 +285,66 @@ public class SimpleDict<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TValue>>
         _buckets = newBuckets;
         _bucketCount = newBucketCount;
     }
+    
+    private void DecreaseSize()
+    {
+        // Create smaller bucket array
+        var newBucketCount = _bucketCount /  Constants.ResizeStep;
+        var newBuckets = new LinkedList<KeyValuePair<TKey, TValue>>[newBucketCount];
+        
+        // Redistribute elements from the old bucket array to the new one
+        foreach (var bucket in _buckets)
+        {
+            if (bucket == null) continue;
+
+            foreach (var kvp in bucket)
+            {
+                int bucketIndex =  GetBucketIndex(kvp.Key, newBucketCount);
+                
+                var newBucket = newBuckets[bucketIndex];
+                if (newBucket == null)
+                {
+                    newBucket = new LinkedList<KeyValuePair<TKey, TValue>>();
+                    newBuckets[bucketIndex] = newBucket;
+                }
+                newBucket.AddFirst(new KeyValuePair<TKey, TValue>(kvp.Key, kvp.Value));
+            }
+        }
+
+        // Swap the old dictionary with the new one
+        _buckets = newBuckets;
+        _bucketCount = newBucketCount;
+    }
+    
+    private void Resize(int newBucketCount)
+    {
+        // Create resized bucket array
+        var newBuckets = new LinkedList<KeyValuePair<TKey, TValue>>[newBucketCount];
+        
+        // Redistribute elements from the old bucket array to the new one
+        foreach (var bucket in _buckets)
+        {
+            if (bucket == null) continue;
+
+            foreach (var kvp in bucket)
+            {
+                int bucketIndex =  GetBucketIndex(kvp.Key, newBucketCount);
+                
+                var newBucket = newBuckets[bucketIndex];
+                if (newBucket == null)
+                {
+                    newBucket = new LinkedList<KeyValuePair<TKey, TValue>>();
+                    newBuckets[bucketIndex] = newBucket;
+                }
+                newBucket.AddFirst(new KeyValuePair<TKey, TValue>(kvp.Key, kvp.Value));
+            }
+        }
+
+        // Swap the old dictionary with the new one
+        _buckets = newBuckets;
+        _bucketCount = newBucketCount;
+    }
+
 
     private int GetBucketIndex(TKey key)
     {
@@ -291,6 +356,12 @@ public class SimpleDict<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TValue>>
     private int GetBucketIndex(TKey key, int bucketCount)
     {
         return Math.Abs(key.GetHashCode() % bucketCount);
+    }
+    
+    // For the purposes of testing
+    public int Size()
+    {
+        return _bucketCount;
     }
 
     // --------- IEnumerable Implementation --------------

@@ -45,7 +45,7 @@ public class AddTests
             _dict.Add(pair);
         }
         
-        Assert.That(_dict.Length(), Is.EqualTo(10));
+        Assert.That(_dict.Size(), Is.EqualTo(32));
 
         foreach (var pair in list)
         {
